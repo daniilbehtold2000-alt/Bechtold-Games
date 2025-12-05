@@ -3,99 +3,234 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Эпоха Империи | Настольная стратегия</title>
-    <!-- Подключаем новые стили -->
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- RESET & VARS --- */
+        :root {
+            --bg-page: #000000;
+            --bg-card: #1d1d1f;
+            --bg-light: #f5f5f7;
+            --text-main: #f5f5f7;
+            --text-muted: #86868b;
+            --accent: #2997ff; /* Apple Blue */
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --nav-height: 52px;
+            --radius: 18px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.4;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
+        h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 20px; }
+        h2 { font-size: 2.5rem; margin-bottom: 20px; }
+        h3 { font-size: 1.5rem; margin-bottom: 10px; }
+        p { font-size: 1.05rem; color: var(--text-muted); line-height: 1.6; }
+
+        /* --- BUTTONS --- */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 980px; /* Pill shape */
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover { background: #0077ed; }
+
+        .btn-link { color: var(--accent); padding: 12px 0; margin-left: 20px; }
+        .btn-link:hover { text-decoration: underline; }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--nav-height);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-content {
+            max-width: 1000px; margin: 0 auto; height: 100%;
+            display: flex; justify-content: space-between; align-items: center; padding: 0 20px;
+        }
+
+        .logo { font-weight: 600; color: #fff; font-size: 1.1rem; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-size: 0.8rem; color: #e8e8ed; opacity: 0.8; transition: opacity 0.2s; }
+        .nav-links a:hover { opacity: 1; }
+
+        .nav-btn-buy {
+            background: #fff; color: #000 !important;
+            padding: 4px 12px; border-radius: 980px; opacity: 1 !important;
+        }
+
+        .burger { display: none; cursor: pointer; }
+        .burger span { display: block; width: 20px; height: 2px; background: #fff; margin: 4px 0; }
+
+        /* --- HERO --- */
+        .hero {
+            padding-top: 120px; padding-bottom: 80px; text-align: center;
+            min-height: 90vh; display: flex; flex-direction: column; justify-content: center;
+        }
+        .hero-content { margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .hero-title { background: linear-gradient(135deg, #fff 0%, #888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-subtitle { font-size: 1.5rem; margin-bottom: 30px; font-weight: 400; }
+        .hero-img { border-radius: var(--radius); box-shadow: 0 0 50px rgba(255,255,255,0.05); margin: 0 auto; }
+
+        /* --- SPECS STRIP --- */
+        .specs-strip { border-top: 1px solid #333; border-bottom: 1px solid #333; padding: 30px 0; background: #0a0a0a; }
+        .specs-grid { display: flex; justify-content: space-around; text-align: center; }
+        .spec-val { display: block; font-size: 1.5rem; font-weight: 700; color: #fff; }
+        .spec-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- SECTIONS --- */
+        .section-dark { padding: 100px 0; background: #000; }
+        .section-gray { padding: 100px 0; background: #101010; }
+        .narrative-text { max-width: 800px; margin: 0 auto; }
+        .narrative-text h2 { font-size: 3rem; margin-bottom: 30px; color: #fff; }
+        .narrative-text p { font-size: 1.3rem; color: #a1a1a6; }
+        .section-header { text-align: center; margin-bottom: 50px; }
+
+        /* --- BENTO GRID --- */
+        .bento-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: minmax(250px, auto); gap: 20px;
+        }
+        .bento-card {
+            background: var(--bg-card); border-radius: 20px; padding: 30px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            overflow: hidden; position: relative; transition: transform 0.3s ease;
+        }
+        .bento-card:hover { transform: scale(1.02); z-index: 2; }
+        .card-large { grid-column: span 2; grid-row: span 2; min-height: 500px; }
+        .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; }
+        .icon-placeholder { font-size: 4rem; opacity: 0.2; position: absolute; bottom: 20px; right: 20px; }
+        .highlight { background: #1c1c1e; border: 1px solid #333; }
+        .btn-text { color: var(--accent); font-size: 0.9rem; margin-top: 15px; display: inline-block; }
+
+        /* --- GAMEPLAY & BUY --- */
+        .split-layout { display: flex; align-items: center; gap: 60px; }
+        .section-light { background: #fff; color: #000; padding: 100px 0; }
+        .buy-container { display: flex; gap: 60px; align-items: center; }
+        .product-title { font-size: 3rem; margin-bottom: 5px; color: #000; }
+        .price { font-size: 2.5rem; font-weight: 700; display: block; margin-bottom: 10px; }
+        .feature-list li { margin-bottom: 10px; color: #333; }
+        .feature-list li::before { content: "✓"; color: var(--accent); margin-right: 10px; }
+        .input-group { margin-bottom: 15px; display: flex; gap: 10px; }
+        .input-group input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #ccc; background: #f5f5f7; font-size: 1rem; }
+        .btn-block { width: 100%; padding: 18px; font-size: 1.1rem; }
+
+        /* --- FOOTER --- */
+        .footer { background: #111; padding: 60px 0 20px; border-top: 1px solid #222; font-size: 0.8rem; color: #666; }
+        .footer-columns { display: flex; justify-content: space-between; margin-bottom: 40px; }
+        .footer-col { display: flex; flex-direction: column; gap: 10px; }
+        .footer-col h4 { color: #fff; margin-bottom: 10px; }
+
+        /* --- ANIMATIONS --- */
+        .fade-in { animation: fadeIn 1s ease-out forwards; opacity: 0; transform: translateY(20px); }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+
+        /* --- MOBILE --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; } h2 { font-size: 2rem; }
+            .nav-links {
+                display: none; position: absolute; top: var(--nav-height); left: 0; width: 100%;
+                background: #000; flex-direction: column; padding: 20px; border-bottom: 1px solid #333;
+            }
+            .nav-links.active { display: flex; }
+            .burger { display: block; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .card-large, .card-medium { grid-column: span 1; min-height: 300px; }
+            .split-layout, .buy-container, .footer-columns { flex-direction: column; gap: 40px; }
+            .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Навигация (Apple-style: sticky, blur) -->
+    <!-- Навигация -->
     <nav class="navbar">
         <div class="nav-content">
             <a href="#" class="logo">
                 <span class="logo-icon">♟</span> Bechtold Games
             </a>
-            
             <div class="nav-links">
                 <a href="#philosophy">Об игре</a>
                 <a href="#features">Особенности</a>
                 <a href="reference.html">Справочник</a>
                 <a href="#buy" class="nav-btn-buy">Купить</a>
             </div>
-
             <div class="burger" onclick="document.querySelector('.nav-links').classList.toggle('active')">
-                <span></span><span></span>
+                <span></span><span></span><span></span>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section: Продукт крупным планом -->
+    <!-- Hero Section -->
     <header class="hero">
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title fade-in">Правление Петра I</h1>
                 <p class="hero-subtitle fade-in delay-1">История не написана.<br>Она сыграна вами.</p>
-                
                 <div class="hero-buttons fade-in delay-2">
                     <a href="#buy" class="btn btn-primary">Купить</a>
                     <a href="#features" class="btn btn-link">Узнать больше ></a>
                 </div>
             </div>
-            
             <div class="hero-image-wrapper fade-in delay-3">
-                <!-- Большое красивое фото коробки/игры -->
                 <img src="https://via.placeholder.com/1000x600/111/444?text=Эпичное+фото+игры" alt="Коробка игры" class="hero-img">
             </div>
         </div>
     </header>
 
-    <!-- Specs Strip: Характеристики -->
+    <!-- Характеристики -->
     <div class="specs-strip">
         <div class="container specs-grid">
-            <div class="spec-item">
-                <span class="spec-val">2–4</span>
-                <span class="spec-label">Игрока</span>
-            </div>
-            <div class="spec-item">
-                <span class="spec-val">90+</span>
-                <span class="spec-label">Минут</span>
-            </div>
-            <div class="spec-item">
-                <span class="spec-val">12+</span>
-                <span class="spec-label">Возраст</span>
-            </div>
-            <div class="spec-item">
-                <span class="spec-val">Hard</span>
-                <span class="spec-label">Стратегия</span>
-            </div>
+            <div class="spec-item"><span class="spec-val">2–4</span><span class="spec-label">Игрока</span></div>
+            <div class="spec-item"><span class="spec-val">90+</span><span class="spec-label">Минут</span></div>
+            <div class="spec-item"><span class="spec-val">12+</span><span class="spec-label">Возраст</span></div>
+            <div class="spec-item"><span class="spec-val">Hard</span><span class="spec-label">Стратегия</span></div>
         </div>
     </div>
 
-    <!-- Narrative Section: Философия (Большой текст) -->
-    <section id="philosophy" class="section-dark">
-        <div class="container">
-            <div class="narrative-text">
-                <h2>Погружение в эпоху.</h2>
-                <p>Мы не просто сделали игру. Мы воссоздали эпоху дворцовых переворотов. Каждая карта — это реальный исторический документ. Каждая механика отражает сложность управления Империей. Это ваш шанс переписать историю.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Bento Grid: Особенности (Сетка карточек) -->
+    <!-- Особенности (Bento Grid) -->
     <section id="features" class="section-gray">
         <div class="container">
             <h2 class="section-header">Особенности издания.</h2>
-            
             <div class="bento-grid">
-                <!-- Большая карточка 1 -->
-                <div class="bento-card card-large card-map">
+                <div class="bento-card card-large">
                     <div class="card-content">
                         <h3>Гигантская карта</h3>
                         <p>Детализированная карта Российской Империи XVIII века.</p>
                     </div>
                     <img src="https://via.placeholder.com/600x400/222/555?text=Карта+Империи" alt="Карта" class="card-bg">
                 </div>
-
-                <!-- Малая карточка 2 -->
                 <div class="bento-card card-small">
                     <div class="card-content">
                         <h3>60 Событий</h3>
@@ -103,53 +238,25 @@
                     </div>
                     <div class="icon-placeholder">📜</div>
                 </div>
-
-                <!-- Малая карточка 3 -->
                 <div class="bento-card card-small">
                     <div class="card-content">
                         <h3>Дерево</h3>
-                        <p>Премиальные деревянные компоненты и фишки.</p>
+                        <p>Премиальные деревянные компоненты.</p>
                     </div>
                     <div class="icon-placeholder">♟</div>
                 </div>
-
-                <!-- Средняя карточка 4 -->
                 <div class="bento-card card-medium highlight">
                     <div class="card-content">
-                        <h3>Исторический справочник</h3>
-                        <p>В комплекте идет буклет с описанием всех событий игры.</p>
+                        <h3>Справочник</h3>
+                        <p>Исторический буклет в комплекте.</p>
                         <a href="reference.html" class="btn-text">Открыть онлайн-версию ↗</a>
                     </div>
                 </div>
-                
-                <!-- Средняя карточка 5 -->
-                <div class="bento-card card-medium">
-                    <div class="card-content">
-                        <h3>Для образования</h3>
-                        <p>Рекомендовано учителями истории для закрепления материала.</p>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- Gameplay: Слайдер или шаги -->
-    <section id="gameplay" class="section-dark">
-        <div class="container">
-            <div class="split-layout">
-                <div class="split-text">
-                    <h2>Стратегия.<br>Интриги.<br>Власть.</h2>
-                    <p>Вам предстоит балансировать между развитием армии, строительством флота и придворными интригами. Один неверный шаг может привести к падению династии.</p>
-                    <a href="#buy" class="link-arrow">Правила игры ></a>
-                </div>
-                <div class="split-image">
-                    <img src="https://via.placeholder.com/500x600/1a1a1a/333?text=Игровой+Процесс" alt="Геймплей">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Buy Section: Продукт -->
+    <!-- Покупка -->
     <section id="buy" class="section-light">
         <div class="container">
             <div class="buy-container">
@@ -159,24 +266,19 @@
                 <div class="product-details">
                     <h2 class="product-title">Правление Петра I</h2>
                     <p class="product-edition">Базовое издание</p>
-                    
                     <div class="price-block">
                         <span class="price">3 990 ₽</span>
-                        <span class="availability">В наличии</span>
                     </div>
-
                     <ul class="feature-list">
-                        <li>Бесплатная доставка по РФ</li>
-                        <li>Гарантия качества компонентов</li>
-                        <li>Справочник в подарок</li>
+                        <li>Бесплатная доставка</li>
+                        <li>Гарантия качества</li>
                     </ul>
-
-                    <form onsubmit="event.preventDefault(); alert('Спасибо! Мы свяжемся с вами.');" class="buy-form">
+                    <form onsubmit="event.preventDefault(); alert('Заявка отправлена!');" class="buy-form">
                         <div class="input-group">
-                            <input type="text" placeholder="Ваше имя" required>
+                            <input type="text" placeholder="Имя" required>
                             <input type="email" placeholder="Email" required>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Оформить заказ</button>
+                        <button type="submit" class="btn btn-primary btn-block">Заказать</button>
                     </form>
                 </div>
             </div>
@@ -190,27 +292,15 @@
                 <div class="footer-col">
                     <h4>Навигация</h4>
                     <a href="#about">Об игре</a>
-                    <a href="#components">Компоненты</a>
                     <a href="reference.html">Справочник</a>
                 </div>
                 <div class="footer-col">
-                    <h4>Покупателям</h4>
-                    <a href="#">Доставка и оплата</a>
-                    <a href="#">Возврат</a>
-                    <a href="#">Публичная оферта</a>
-                </div>
-                <div class="footer-col">
                     <h4>Контакты</h4>
-                    <a href="mailto:info@historygame.ru">info@historygame.ru</a>
-                    <a href="tel:+79990000000">+7 (999) 000-00-00</a>
-                    <div class="socials">
-                        <a href="#">VK</a>
-                        <a href="#">TG</a>
-                    </div>
+                    <a href="#">info@historygame.ru</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Bechtold Games. Дизайн вдохновлен историей.</p>
+                <p>&copy; 2024 Bechtold Games.</p>
             </div>
         </div>
     </footer>
