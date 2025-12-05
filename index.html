@@ -1,0 +1,797 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Правление Петра I и Эпоха дворцовых переворотов | Настольная игра</title>
+    <style>
+        /* --- Шрифты --- */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+        /* --- Переменные и Базовые стили --- */
+        :root {
+            --bg-paper: #f0e6d2;
+            --bg-paper-dark: #e6d8c0;
+            --color-primary: #1a2c4e; /* Тёмно-синий */
+            --color-accent: #b8860b; /* Золотой */
+            --color-btn: #800020; /* Бордовый */
+            --color-btn-hover: #5a0016;
+            --text-main: #2c2c2c;
+            
+            --font-header: 'Playfair Display', serif;
+            --font-body: 'Lora', serif;
+            --nav-height: 70px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--nav-height); /* Учет высоты меню при скролле */
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-paper);
+            color: var(--text-main);
+            line-height: 1.8; /* Увеличенный интервал для удобства чтения */
+            font-size: 18px; /* Базовый размер шрифта чуть больше */
+            background-image: 
+                linear-gradient(rgba(240, 230, 210, 0.92), rgba(240, 230, 210, 0.92)),
+                url('data:image/svg+xml;utf8,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.1"/%3E%3C/svg%3E');
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-header);
+            color: var(--color-primary);
+            margin-bottom: 1.2rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s;
+        }
+
+        /* --- Декоративные элементы (Разделители) --- */
+        .divider-crown {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 40px auto;
+            max-width: 600px;
+            color: var(--color-accent);
+            opacity: 0.6;
+        }
+
+        .divider-crown::before,
+        .divider-crown::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: var(--color-accent);
+            margin: 0 15px;
+        }
+
+        .divider-crown span {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        /* --- Рамки для секций --- */
+        .ornate-frame {
+            border: 3px double var(--color-primary);
+            padding: 40px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        /* Уголки для рамки */
+        .ornate-frame::after {
+            content: "";
+            position: absolute;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 1px solid var(--color-accent);
+            pointer-events: none;
+        }
+
+        /* --- Меню --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background-color: rgba(26, 44, 78, 0.95); /* Полупрозрачный фон */
+            backdrop-filter: blur(5px);
+            border-bottom: 3px double var(--color-accent);
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            height: 100%;
+        }
+
+        .logo {
+            font-family: var(--font-header);
+            color: var(--color-accent);
+            font-size: 1.3rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: sans-serif;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+
+        .burger {
+            display: none;
+            color: var(--color-accent);
+            font-size: 1.8rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* --- Кнопки --- */
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            border-radius: 4px;
+            font-family: var(--font-header);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--color-btn);
+            color: #fff;
+            border: 1px solid var(--color-btn);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-btn-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-primary);
+            color: #fff;
+        }
+        
+        /* Кнопка внутри карточки */
+        .btn-sm {
+            padding: 10px 16px;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        /* --- Секции общие --- */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- Hero Block --- */
+        .hero {
+            padding-top: 120px; /* Больше отступ сверху из-за фикс меню */
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            min-height: 85vh;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 0px rgba(255,255,255,0.4);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #4a4a4a;
+            margin-bottom: 40px;
+            font-style: italic;
+            border-left: 4px solid var(--color-accent);
+            padding-left: 20px;
+        }
+
+        .hero-img {
+            flex: 1;
+            height: 450px;
+            background-color: #ddd;
+            border: 8px double var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 15px 15px 0 rgba(26, 44, 78, 0.1);
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* --- О игре (Grid Layout) --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 30px;
+        }
+
+        .about-text-col {
+            text-align: justify;
+        }
+
+        /* --- Компоненты (Grid) --- */
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+            gap: 30px;
+        }
+
+        .card {
+            background-color: #fff;
+            padding: 25px;
+            border: 1px solid var(--color-accent);
+            box-shadow: 5px 5px 0 rgba(26, 44, 78, 0.1);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 8px 8px 0 rgba(184, 134, 11, 0.4);
+        }
+
+        .card h3 {
+            color: var(--color-btn);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            font-size: 1.4rem;
+        }
+        
+        .card p {
+            flex-grow: 1; /* Чтобы текст растягивал карточку */
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* --- Как играть (Flex/Grid) --- */
+        .gameplay-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            background-color: var(--color-primary);
+            color: var(--color-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-header);
+            font-weight: bold;
+            font-size: 1.5rem;
+            border: 3px double var(--color-accent);
+        }
+
+        /* --- Для учителей (Flex) --- */
+        .teachers-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .teachers-content ul {
+            list-style: none;
+            width: 100%;
+        }
+
+        .teachers-content li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 20px;
+        }
+
+        .teachers-content li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--color-btn);
+            font-size: 1.2rem;
+        }
+
+        /* --- Купить (Flex) --- */
+        .buy-wrapper {
+            display: flex;
+            gap: 50px;
+            align-items: stretch;
+            justify-content: space-between;
+        }
+
+        .price-box {
+            flex: 1;
+            background: var(--color-primary);
+            color: var(--color-accent);
+            padding: 50px;
+            text-align: center;
+            border: 6px double var(--color-accent);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .price-val {
+            font-size: 3.5rem;
+            font-family: var(--font-header);
+            margin: 15px 0;
+            color: #fff;
+        }
+
+        .form-box {
+            flex: 1.5;
+            background: #fff;
+            padding: 40px;
+            border: 1px solid var(--color-primary);
+            box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
+        }
+
+        .form-box form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #fcfcfc;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            background-color: #fff;
+        }
+
+        /* --- Футер --- */
+        footer {
+            background-color: var(--color-primary);
+            color: #fff;
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 6px double var(--color-accent);
+            margin-top: 60px;
+        }
+
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-bottom: 30px;
+        }
+
+        .contact-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-link span {
+            font-size: 1.8rem;
+            color: var(--color-accent);
+        }
+
+        /* --- АДАПТИВНОСТЬ (Media Queries) --- */
+        @media (max-width: 992px) {
+            .components-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 колонки на планшете */
+            }
+            .hero h1 { font-size: 3rem; }
+        }
+
+        @media (max-width: 768px) {
+            /* Меню - Бургер */
+            .burger {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: var(--nav-height);
+                left: 0;
+                width: 100%;
+                background-color: var(--color-primary);
+                flex-direction: column;
+                padding: 0;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+                border-bottom: 3px double var(--color-accent);
+            }
+
+            .nav-links.active {
+                max-height: 450px; /* Увеличено, чтобы влез новый пункт */
+                padding-bottom: 20px;
+            }
+
+            .nav-links a {
+                padding: 15px 20px;
+                border-bottom: 1px solid rgba(184, 134, 11, 0.2);
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+
+            /* Layout сброс в 1 колонку */
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 100px;
+                gap: 30px;
+            }
+
+            .hero-actions {
+                justify-content: center;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .hero-img {
+                width: 100%;
+                height: 300px;
+            }
+
+            .about-grid, 
+            .components-grid, 
+            .buy-wrapper,
+            .contact-grid {
+                display: flex;
+                flex-direction: column; /* 1 колонка */
+            }
+
+            .about-grid { gap: 20px; }
+            .components-grid { gap: 20px; }
+            
+            .contact-grid {
+                gap: 30px;
+            }
+
+            h2 { font-size: 2.2rem; }
+            
+            .ornate-frame {
+                padding: 25px; /* Меньше отступов внутри рамок на мобайле */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Навигация -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">ИСТОРИЯ В ИГРЕ</div>
+            <div class="burger" onclick="toggleMenu()">☰</div>
+            <div class="nav-links" id="navLinks">
+                <a href="#about" onclick="closeMenu()">Об игре</a>
+                <a href="#components" onclick="closeMenu()">Компоненты</a>
+                <a href="reference.html" onclick="closeMenu()">Справочник</a> <!-- Новый пункт -->
+                <a href="#gameplay" onclick="closeMenu()">Как играть</a>
+                <a href="#teachers" onclick="closeMenu()">Для учителей</a>
+                <a href="#buy" onclick="closeMenu()">Купить</a>
+                <a href="#project" onclick="closeMenu()">О проекте</a>
+                <a href="#contacts" onclick="closeMenu()">Контакты</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Блок -->
+    <header class="hero" id="hero">
+        <div class="hero-text">
+            <h1>Правление Петра I</h1>
+            <p class="hero-subtitle">Образовательная евро-стратегия об эпохе великих реформ и дворцовых переворотов</p>
+            <div class="hero-actions">
+                <a href="#buy" class="btn btn-primary">Купить игру</a>
+                <a href="#gameplay" class="btn btn-secondary">Как играть</a>
+            </div>
+        </div>
+        <div class="hero-img">
+            <div style="text-align: center;">
+                [ФОТО КОРОБКИ С ИГРОЙ]<br>
+                <small style="font-size: 0.8rem; font-style: italic; color: #666;">(Макет упаковки)</small>
+            </div>
+        </div>
+    </header>
+
+    <div class="divider-crown"><span>♕</span></div>
+
+    <!-- О игре -->
+    <section id="about">
+        <h2>Об игре</h2>
+        <div class="ornate-frame">
+            <div class="about-grid">
+                <div class="about-text-col">
+                    <p><strong>«Правление Петра I»</strong> — это глубокая экономическая стратегия, погружающая игроков в один из самых бурных периодов российской истории. Вам предстоит взять на себя роль сподвижников императора или влиятельных дворянских родов, стремящихся укрепить свое положение в меняющемся государстве.</p>
+                    <p>Проект разработан как для любителей серьезных настольных игр, так и для использования в образовательных целях. Баланс между исторической достоверностью и игровым азартом делает её идеальной для старшеклассников, студентов и семейного досуга.</p>
+                </div>
+                <div class="about-text-col">
+                    <p><strong>Жанр и механики:</strong> Игра сочетает классическую механику размещения рабочих (worker placement) с управлением ресурсами и розыгрышем исторических событий.</p>
+                    <p>Каждое решение влияет не только на ваш личный престиж, но и на судьбу империи. Стройте флот, подавляйте бунты, участвуйте в интригах или поддержите реформы — история в ваших руках.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider-crown"><span>🌿</span></div>
+
+    <!-- Компоненты -->
+    <section id="components">
+        <h2>Компоненты игры</h2>
+        <div class="components-grid">
+            <div class="card">
+                <h3>Карты событий</h3>
+                <p>60 уникальных карт с реальными историческими событиями 1682–1762 годов. От Стрелецкого бунта до Семилетней войны.</p>
+            </div>
+            <div class="card">
+                <h3>Карты строений</h3>
+                <p>Верфи, коллегии, дворцы и крепости. Стройте Санкт-Петербург и развивайте инфраструктуру империи.</p>
+            </div>
+            <div class="card">
+                <h3>Карты личностей</h3>
+                <p>Меншиков, Екатерина I, Бирон и другие деятели эпохи, дающие уникальные бонусы игрокам.</p>
+            </div>
+            <div class="card">
+                <h3>Карты мануфактур</h3>
+                <p>Экономический движок игры. Производите сукно, железо и порох для нужд армии и флота.</p>
+            </div>
+            <div class="card">
+                <h3>Планшеты и поле</h3>
+                <p>Большая карта Российской Империи и личные планшеты дворянских родов из плотного картона.</p>
+            </div>
+            <div class="card">
+                <h3>Справочник</h3>
+                <p>Методическое пособие с историческими справками к каждой карте, проверенное историками.</p>
+                <!-- Добавлена кнопка -->
+                <a href="reference.html" class="btn btn-secondary btn-sm">Читать онлайн</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider-crown"><span>♕</span></div>
+
+    <!-- Как играть -->
+    <section id="gameplay">
+        <h2>Как играть</h2>
+        <div class="gameplay-container">
+            <div class="step-item">
+                <div class="step-number">I</div>
+                <div>
+                    <h3>Подготовка к партии</h3>
+                    <p>Игроки выбирают дворянский род и получают начальные ресурсы. На поле выкладываются карты событий текущей эпохи.</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-number">II</div>
+                <div>
+                    <h3>Размещение рабочих</h3>
+                    <p>В свой ход игрок отправляет "чиновников" в различные локации: Сенат, Адмиралтейство, Торговый порт для получения преимуществ.</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-number">III</div>
+                <div>
+                    <h3>Действия и События</h3>
+                    <p>Выполнение действий локаций (найм рекрутов, строительство, торговля). Розыгрыш карт событий, меняющих правила раунда.</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-number">IV</div>
+                <div>
+                    <h3>Смена Эпох</h3>
+                    <p>После смерти монарха наступает фаза Дворцового переворота. Влияние фракций пересчитывается.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider-crown"><span>🌿</span></div>
+
+    <!-- Для учителей -->
+    <section id="teachers">
+        <h2>Для учителей</h2>
+        <div class="ornate-frame">
+            <div class="teachers-content">
+                <ul>
+                    <li><strong>Визуализация истории:</strong> Ученики запоминают ключевые даты и личности через взаимодействие с игровыми компонентами, а не зубрежку.</li>
+                    <li><strong>Понимание процессов:</strong> Механики игры наглядно показывают причинно-следственные связи реформ Петра I и их экономические последствия.</li>
+                    <li><strong>Развитие навыков:</strong> Игра тренирует стратегическое мышление, навыки переговоров и планирования ресурсов.</li>
+                    <li><strong>Методическая поддержка:</strong> В комплекте идет брошюра со сценариями уроков на 45 и 90 минут.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider-crown"><span>♕</span></div>
+
+    <!-- Купить -->
+    <section id="buy">
+        <h2>Приобрести игру</h2>
+        <div class="buy-wrapper">
+            <div class="price-box">
+                <h3>Стандартное издание</h3>
+                <div class="price-val">3 990 ₽</div>
+                <p>Доставка по всей России.<br>Специальные условия для школ.</p>
+            </div>
+            <div class="form-box">
+                <form onsubmit="submitForm(event)">
+                    <input type="text" placeholder="Ваше Имя" required>
+                    <input type="email" placeholder="E-mail" required>
+                    <select>
+                        <option value="" disabled selected>Кто вы?</option>
+                        <option value="teacher">Учитель</option>
+                        <option value="school">Представитель школы</option>
+                        <option value="parent">Родитель</option>
+                        <option value="player">Игрок</option>
+                    </select>
+                    <textarea rows="4" placeholder="Комментарий или адрес доставки"></textarea>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Оформить предзаказ</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- О проекте -->
+    <section id="project">
+        <h2>О проекте</h2>
+        <div style="display: flex; gap: 30px; align-items: center; justify-content: center; flex-wrap: wrap;">
+            <div style="width: 150px; height: 150px; background: #ddd; border-radius: 50%; border: 3px solid var(--color-accent); display: flex; align-items: center; justify-content: center; text-align: center; flex-shrink: 0;">
+                [Фото Автора]
+            </div>
+            <div style="max-width: 600px;">
+                <h3 style="margin-bottom: 10px;">Команда разработки</h3>
+                <p>Идея игры родилась в стенах Исторического факультета. Наша цель — сделать историю живой и интересной. Над проектом работали профессиональные геймдизайнеры, художники-иллюстраторы и консультанты-историки, чтобы каждая деталь костюма и каждая дата на карте были достоверными.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер / Контакты -->
+    <footer id="contacts">
+        <div class="contact-grid">
+            <div class="contact-link">
+                <span>✉</span>
+                info@history-game.ru
+            </div>
+            <div class="contact-link">
+                <span>📞</span>
+                +7 (999) 000-00-00
+            </div>
+            <div class="contact-link">
+                <span>🌐</span>
+                <div>
+                    <a href="#" style="text-decoration: underline;">ВКонтакте</a> | 
+                    <a href="#" style="text-decoration: underline;">Telegram</a>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 0.9rem; opacity: 0.7;">&copy; 2024 Исторические Игры. Все права защищены.</p>
+    </footer>
+
+    <script>
+        // Логика меню
+        const navLinks = document.getElementById('navLinks');
+        const burger = document.querySelector('.burger');
+
+        function toggleMenu() {
+            navLinks.classList.toggle('active');
+            // Меняем иконку бургера
+            if (navLinks.classList.contains('active')) {
+                burger.innerHTML = '✕';
+            } else {
+                burger.innerHTML = '☰';
+            }
+        }
+
+        function closeMenu() {
+            // Закрываем меню при клике на ссылку (для мобильных)
+            if (window.innerWidth <= 768) {
+                navLinks.classList.remove('active');
+                burger.innerHTML = '☰';
+            }
+        }
+
+        // Имитация отправки формы
+        function submitForm(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = "Спасибо! Заявка принята";
+            btn.style.backgroundColor = "#2e8b57"; // Зеленый цвет успеха
+            btn.style.borderColor = "#2e8b57";
+            
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.backgroundColor = "";
+                btn.style.borderColor = "";
+                e.target.reset();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
