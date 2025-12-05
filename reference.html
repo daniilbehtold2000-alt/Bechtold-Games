@@ -1,0 +1,465 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Исторический справочник | Настольная игра</title>
+    <style>
+        /* --- Шрифты --- */
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+
+        /* --- Переменные --- */
+        :root {
+            --bg-paper: #f0e6d2;
+            --color-primary: #1a2c4e; /* Тёмно-синий */
+            --color-accent: #b8860b; /* Золотой */
+            --color-text: #2c2c2c;
+            --font-header: 'Playfair Display', serif;
+            --font-body: 'Lato', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--color-text);
+            line-height: 1.6;
+            background-color: var(--bg-paper);
+            background-image: 
+                linear-gradient(rgba(240, 230, 210, 0.94), rgba(240, 230, 210, 0.94)),
+                url('data:image/svg+xml;utf8,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.1"/%3E%3C/svg%3E');
+            padding: 0;
+            margin: 0;
+        }
+
+        /* --- Контейнер --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px 60px 20px;
+        }
+
+        /* --- Хедер --- */
+        header {
+            padding: 30px 0;
+            border-bottom: 3px double var(--color-accent);
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .back-link {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            text-decoration: none;
+            color: var(--color-primary);
+            font-weight: bold;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s;
+            z-index: 100;
+            padding: 10px;
+            background-color: rgba(240, 230, 210, 0.5);
+            border-radius: 4px;
+        }
+
+        .back-link:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        h1 {
+            font-family: var(--font-header);
+            color: var(--color-primary);
+            font-size: 2.5rem;
+            margin: 0;
+            pointer-events: none;
+        }
+
+        /* --- Описание страницы --- */
+        .page-description {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+            font-style: italic;
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        /* --- Фильтры --- */
+        .reference-filters {
+            background-color: rgba(255, 255, 255, 0.4);
+            border: 1px solid var(--color-accent);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-group span {
+            font-family: var(--font-header);
+            font-weight: bold;
+            color: var(--color-primary);
+            margin-right: 5px;
+            min-width: 60px;
+        }
+
+        .filter-btn {
+            background-color: transparent;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            padding: 6px 12px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background-color: rgba(26, 44, 78, 0.1);
+            border-color: var(--color-accent);
+        }
+
+        .filter-btn.active {
+            background-color: var(--color-primary);
+            color: #fff;
+            border-color: var(--color-primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* --- Список карточек --- */
+        .reference-list {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* --- Карточка (Article) --- */
+        .reference-item {
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--color-accent);
+            padding: 25px;
+            border-radius: 4px;
+            display: flex;
+            gap: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        
+        /* Класс для скрытия элементов при фильтрации */
+        .reference-item.hidden {
+            display: none;
+        }
+
+        .reference-item:hover {
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 6px 15px rgba(26, 44, 78, 0.15);
+        }
+
+        .ref-img-wrapper {
+            flex: 0 0 280px;
+        }
+
+        .ref-img-wrapper img {
+            width: 100%;
+            height: auto;
+            border-radius: 2px;
+            border: 4px double var(--color-primary);
+            display: block;
+        }
+
+        .ref-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ref-content h2 {
+            font-family: var(--font-header);
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+            border-bottom: 1px solid rgba(184, 134, 11, 0.3);
+            padding-bottom: 5px;
+        }
+
+        .ref-meta {
+            color: var(--color-accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .ref-desc {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .ref-mechanic {
+            margin-top: auto;
+            background-color: rgba(26, 44, 78, 0.05);
+            padding: 10px 15px;
+            border-left: 3px solid var(--color-primary);
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        .ref-mechanic strong {
+            color: var(--color-primary);
+        }
+
+        /* --- Адаптивность --- */
+        @media (max-width: 768px) {
+            header {
+                padding-top: 60px;
+            }
+
+            .back-link {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid var(--color-accent);
+                background: rgba(255,255,255,0.9);
+            }
+
+            .reference-filters {
+                gap: 20px;
+            }
+            
+            .filter-group span {
+                width: 100%; /* Заголовок фильтра на новой строке на мобильном */
+                margin-bottom: 5px;
+            }
+
+            .reference-item {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .ref-img-wrapper {
+                flex: auto;
+                width: 100%;
+            }
+
+            .ref-img-wrapper img {
+                max-height: 300px;
+                object-fit: cover;
+                width: 100%;
+            }
+            
+            .ref-desc {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        
+        <header>
+            <a href="index.html" class="back-link">← Вернуться на главную</a>
+            <h1>Исторический справочник</h1>
+        </header>
+
+        <p class="page-description">
+            Добро пожаловать в архив Империи. Здесь собрана подробная информация обо всех картах, встречающихся в игре: ключевые события, выдающиеся личности, величественные строения и промышленные мануфактуры, сформировавшие эпоху Петра Великого.
+        </p>
+
+        <!-- ПАНЕЛЬ ФИЛЬТРОВ -->
+        <div class="reference-filters">
+            <div class="filter-group">
+                <span>Тип:</span>
+                <button data-filter-type="all" class="filter-btn active">Все</button>
+                <button data-filter-type="event" class="filter-btn">События</button>
+                <button data-filter-type="person" class="filter-btn">Личности</button>
+                <button data-filter-type="building" class="filter-btn">Строения</button>
+                <button data-filter-type="factory" class="filter-btn">Мануфактуры</button>
+            </div>
+            <div class="filter-group">
+                <span>Период:</span>
+                <button data-filter-period="all" class="filter-btn active">Все периоды</button>
+                <button data-filter-period="1" class="filter-btn">Период I</button>
+                <button data-filter-period="2" class="filter-btn">Период II</button>
+                <button data-filter-period="3" class="filter-btn">Период III</button>
+            </div>
+        </div>
+
+        <div class="reference-list">
+
+            <!-- 
+            ИНСТРУКЦИЯ ПО ДОБАВЛЕНИЮ НОВОЙ КАРТОЧКИ:
+            1. Скопируйте шаблон ниже.
+            2. Заполните data-type (event/person/building/factory) и data-period (1/2/3).
+            3. Заполните контент.
+            -->
+
+            <!-- ШАБЛОН КАРТОЧКИ
+            <article class="reference-item" data-type="person" data-period="1">
+                <div class="ref-img-wrapper">
+                    <img src="img/cards/example.png" alt="Описание">
+                </div>
+                <div class="ref-content">
+                    <h2>Название</h2>
+                    <p class="ref-meta">Тип: Личность • Период: I</p>
+                    <p class="ref-desc">Описание...</p>
+                    <p class="ref-mechanic">Механика...</p>
+                </div>
+            </article>
+            КОНЕЦ ШАБЛОНА -->
+
+            <!-- Карточка 1: Пётр I (Личность, Период I) -->
+            <article class="reference-item" data-type="person" data-period="1">
+                <div class="ref-img-wrapper">
+                    <img src="https://placehold.co/400x300/1a2c4e/e6d8c0?text=Пётр+I" alt="Карта Пётр I">
+                </div>
+                <div class="ref-content">
+                    <h2>Пётр I Великий</h2>
+                    <p class="ref-meta">Тип: Личность • Период: I (Эпоха реформ)</p>
+                    <p class="ref-desc">
+                        Последний царь всея Руси и первый Император Всероссийский. Развернул масштабные реформы государственного строя, создал регулярную армию и флот, основал Санкт-Петербург. Его правление кардинально изменило вектор развития России, направив её по западному пути.
+                    </p>
+                    <p class="ref-mechanic">
+                        <strong>В игре:</strong> Дает игроку дополнительного рабочего ("чиновника") в фазу размещения. Позволяет игнорировать одно негативное событие за раунд.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Карточка 2: Нарвская битва (Событие, Период I) -->
+            <article class="reference-item" data-type="event" data-period="1">
+                <div class="ref-img-wrapper">
+                    <img src="https://placehold.co/400x300/800020/e6d8c0?text=Нарвская+битва" alt="Нарвская битва">
+                </div>
+                <div class="ref-content">
+                    <h2>Нарвская конфузия</h2>
+                    <p class="ref-meta">Тип: Событие • Период: I</p>
+                    <p class="ref-desc">
+                        Первое крупное сражение Северной войны в 1700 году, закончившееся тяжёлым поражением русской армии от шведских войск Карла XII. Несмотря на потерю артиллерии, это поражение стало катализатором военных реформ Петра I и создания новой, боеспособной армии.
+                    </p>
+                    <p class="ref-mechanic">
+                        <strong>В игре:</strong> Все игроки теряют половину накопленных ресурсов "Оружие". Стоимость найма рекрутов удваивается в текущем раунде.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Карточка 3: Уральские заводы (Мануфактура, Период II) -->
+            <article class="reference-item" data-type="factory" data-period="2">
+                <div class="ref-img-wrapper">
+                    <img src="https://placehold.co/400x300/b8860b/1a2c4e?text=Демидовские+заводы" alt="Демидовские заводы">
+                </div>
+                <div class="ref-content">
+                    <h2>Уральские заводы Демидовых</h2>
+                    <p class="ref-meta">Тип: Мануфактура • Период: II</p>
+                    <p class="ref-desc">
+                        Крупнейший промышленный комплекс на Урале, основанный Никитой Демидовым по указу Петра. Заводы стали главным поставщиком железа и чугуна для армии и флота, обеспечив победу в Северной войне. Урал превратился в опорный край державы.
+                    </p>
+                    <p class="ref-mechanic">
+                        <strong>В игре:</strong> Приносит 3 единицы ресурса "Железо" в фазу дохода. Если у игрока есть карта "Литейный двор", производство удваивается.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Карточка 4: Здание 12 коллегий (Строение, Период III) -->
+            <article class="reference-item" data-type="building" data-period="3">
+                <div class="ref-img-wrapper">
+                    <img src="https://placehold.co/400x300/555555/e6d8c0?text=Здание+12+коллегий" alt="Здание 12 коллегий">
+                </div>
+                <div class="ref-content">
+                    <h2>Здание Двенадцати коллегий</h2>
+                    <p class="ref-meta">Тип: Строение • Период: III</p>
+                    <p class="ref-desc">
+                        Выдающийся памятник петровского барокко в Санкт-Петербурге. Построено для размещения Коллегий — центральных органов отраслевого управления, заменивших устаревшие приказы. Символ новой, рациональной бюрократии.
+                    </p>
+                    <p class="ref-mechanic">
+                        <strong>В игре:</strong> Позволяет обменивать очки Влияния на Победные очки по выгодному курсу в конце игры. Требует 5 золота для постройки.
+                    </p>
+                </div>
+            </article>
+
+        </div>
+
+    </main>
+
+    <!-- СКРИПТ ФИЛЬТРАЦИИ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const typeButtons = document.querySelectorAll('[data-filter-type]');
+            const periodButtons = document.querySelectorAll('[data-filter-period]');
+            const items = document.querySelectorAll('.reference-item');
+
+            let currentType = 'all';
+            let currentPeriod = 'all';
+
+            function filterItems() {
+                items.forEach(item => {
+                    const itemType = item.getAttribute('data-type');
+                    const itemPeriod = item.getAttribute('data-period');
+
+                    const typeMatch = (currentType === 'all' || itemType === currentType);
+                    const periodMatch = (currentPeriod === 'all' || itemPeriod === currentPeriod);
+
+                    if (typeMatch && periodMatch) {
+                        item.classList.remove('hidden');
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Обработка клика по Типу
+            typeButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Убираем active у всех кнопок типа
+                    typeButtons.forEach(b => b.classList.remove('active'));
+                    // Добавляем нажатой
+                    btn.classList.add('active');
+                    // Обновляем переменную
+                    currentType = btn.getAttribute('data-filter-type');
+                    // Фильтруем
+                    filterItems();
+                });
+            });
+
+            // Обработка клика по Периоду
+            periodButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Убираем active у всех кнопок периода
+                    periodButtons.forEach(b => b.classList.remove('active'));
+                    // Добавляем нажатой
+                    btn.classList.add('active');
+                    // Обновляем переменную
+                    currentPeriod = btn.getAttribute('data-filter-period');
+                    // Фильтруем
+                    filterItems();
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
