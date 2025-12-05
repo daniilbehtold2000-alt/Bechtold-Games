@@ -2,146 +2,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Правление Петра I | Настольная игра</title>
-    <!-- Подключаем стили -->
+    <title>Эпоха Империи | Настольная стратегия</title>
+    <!-- Подключаем новые стили -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Навигация -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo">
-                <span style="font-size: 1.5rem; margin-right: 10px;">♟</span>
-                ИСТОРИЯ В ИГРЕ
-            </div>
+    <!-- Навигация (Apple-style: sticky, blur) -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">
+                <span class="logo-icon">♟</span> Bechtold Games
+            </a>
             
-            <!-- Бургер для мобильных (простой JS прямо в атрибуте) -->
-            <div class="burger" onclick="document.querySelector('.nav-links').classList.toggle('active')">
-                ☰
+            <div class="nav-links">
+                <a href="#philosophy">Об игре</a>
+                <a href="#features">Особенности</a>
+                <a href="reference.html">Справочник</a>
+                <a href="#buy" class="nav-btn-buy">Купить</a>
             </div>
 
-            <div class="nav-links">
-                <a href="#about">Об игре</a>
-                <a href="#components">Компоненты</a>
-                <a href="reference.html">Справочник</a>
-                <a href="#gameplay">Как играть</a>
-                <a href="#teachers">Учителям</a>
-                <a href="#buy">Купить</a>
-                <a href="#contacts">Контакты</a>
+            <div class="burger" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+                <span></span><span></span>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Блок -->
+    <!-- Hero Section: Продукт крупным планом -->
     <header class="hero">
-        <div class="container hero-content-wrapper">
-            <div class="hero-text">
-                <h1>Эпоха великих реформ</h1>
-                <p class="hero-subtitle">Стратегическая настольная игра о правлении Петра I и дворцовых переворотах. Постройте Империю своими руками.</p>
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <a href="#buy" class="btn btn-primary">Купить игру</a>
-                    <a href="#gameplay" class="btn btn-secondary">Подробнее</a>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title fade-in">Правление Петра I</h1>
+                <p class="hero-subtitle fade-in delay-1">История не написана.<br>Она сыграна вами.</p>
+                
+                <div class="hero-buttons fade-in delay-2">
+                    <a href="#buy" class="btn btn-primary">Купить</a>
+                    <a href="#features" class="btn btn-link">Узнать больше ></a>
                 </div>
             </div>
-            <div class="hero-img">
-                <!-- Заглушка изображения -->
-                <div style="text-align: center; color: #555;">
-                    <div style="font-size: 4rem; margin-bottom: 10px;">📦</div>
-                    <div style="font-weight: bold;">КОРОБКА ИГРЫ</div>
-                    <small>Базовое издание</small>
-                </div>
+            
+            <div class="hero-image-wrapper fade-in delay-3">
+                <!-- Большое красивое фото коробки/игры -->
+                <img src="https://via.placeholder.com/1000x600/111/444?text=Эпичное+фото+игры" alt="Коробка игры" class="hero-img">
             </div>
         </div>
     </header>
 
-    <!-- Секция Об игре -->
-    <section id="about">
+    <!-- Specs Strip: Характеристики -->
+    <div class="specs-strip">
+        <div class="container specs-grid">
+            <div class="spec-item">
+                <span class="spec-val">2–4</span>
+                <span class="spec-label">Игрока</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-val">90+</span>
+                <span class="spec-label">Минут</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-val">12+</span>
+                <span class="spec-label">Возраст</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-val">Hard</span>
+                <span class="spec-label">Стратегия</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Narrative Section: Философия (Большой текст) -->
+    <section id="philosophy" class="section-dark">
         <div class="container">
-            <h2>О проекте</h2>
-            <div class="about-grid">
-                <div class="card">
-                    <h3>👑 Историческая достоверность</h3>
-                    <p>Каждая карта и событие в игре основаны на реальных документах. Вы не просто играете, вы проживаете историю Российской Империи от 1682 до 1762 года.</p>
+            <div class="narrative-text">
+                <h2>Погружение в эпоху.</h2>
+                <p>Мы не просто сделали игру. Мы воссоздали эпоху дворцовых переворотов. Каждая карта — это реальный исторический документ. Каждая механика отражает сложность управления Империей. Это ваш шанс переписать историю.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bento Grid: Особенности (Сетка карточек) -->
+    <section id="features" class="section-gray">
+        <div class="container">
+            <h2 class="section-header">Особенности издания.</h2>
+            
+            <div class="bento-grid">
+                <!-- Большая карточка 1 -->
+                <div class="bento-card card-large card-map">
+                    <div class="card-content">
+                        <h3>Гигантская карта</h3>
+                        <p>Детализированная карта Российской Империи XVIII века.</p>
+                    </div>
+                    <img src="https://via.placeholder.com/600x400/222/555?text=Карта+Империи" alt="Карта" class="card-bg">
                 </div>
-                <div class="card">
-                    <h3>⚖️ Глубокая стратегия</h3>
-                    <p>Управляйте ресурсами, стройте мануфактуры и участвуйте в политических интригах. Каждое решение влияет на престиж вашего рода и судьбу государства.</p>
+
+                <!-- Малая карточка 2 -->
+                <div class="bento-card card-small">
+                    <div class="card-content">
+                        <h3>60 Событий</h3>
+                        <p>От Нарвской конфузии до Полтавской виктории.</p>
+                    </div>
+                    <div class="icon-placeholder">📜</div>
+                </div>
+
+                <!-- Малая карточка 3 -->
+                <div class="bento-card card-small">
+                    <div class="card-content">
+                        <h3>Дерево</h3>
+                        <p>Премиальные деревянные компоненты и фишки.</p>
+                    </div>
+                    <div class="icon-placeholder">♟</div>
+                </div>
+
+                <!-- Средняя карточка 4 -->
+                <div class="bento-card card-medium highlight">
+                    <div class="card-content">
+                        <h3>Исторический справочник</h3>
+                        <p>В комплекте идет буклет с описанием всех событий игры.</p>
+                        <a href="reference.html" class="btn-text">Открыть онлайн-версию ↗</a>
+                    </div>
+                </div>
+                
+                <!-- Средняя карточка 5 -->
+                <div class="bento-card card-medium">
+                    <div class="card-content">
+                        <h3>Для образования</h3>
+                        <p>Рекомендовано учителями истории для закрепления материала.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Компоненты -->
-    <section id="components">
+    <!-- Gameplay: Слайдер или шаги -->
+    <section id="gameplay" class="section-dark">
         <div class="container">
-            <h2>Компоненты</h2>
-            <div class="components-grid">
-                <div class="card">
-                    <h3>60 Карт событий</h3>
-                    <p>От Стрелецкого бунта до Семилетней войны.</p>
+            <div class="split-layout">
+                <div class="split-text">
+                    <h2>Стратегия.<br>Интриги.<br>Власть.</h2>
+                    <p>Вам предстоит балансировать между развитием армии, строительством флота и придворными интригами. Один неверный шаг может привести к падению династии.</p>
+                    <a href="#buy" class="link-arrow">Правила игры ></a>
                 </div>
-                <div class="card">
-                    <h3>Личности</h3>
-                    <p>Карты сподвижников Петра и деятелей эпохи.</p>
-                </div>
-                <div class="card">
-                    <h3>Поле и жетоны</h3>
-                    <p>Качественное поле и деревянные компоненты.</p>
-                </div>
-                <div class="card highlight-card">
-                    <h3>Справочник</h3>
-                    <p>Полное историческое описание всех карт.</p>
-                    <a href="reference.html" class="btn btn-secondary btn-sm">Читать онлайн</a>
+                <div class="split-image">
+                    <img src="https://via.placeholder.com/500x600/1a1a1a/333?text=Игровой+Процесс" alt="Геймплей">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Как играть (Кратко) -->
-    <section id="gameplay">
+    <!-- Buy Section: Продукт -->
+    <section id="buy" class="section-light">
         <div class="container">
-            <h2>Как играть</h2>
-            <div class="about-grid">
-                <div>
-                    <h3>1. Планирование</h3>
-                    <p>Размещайте своих агентов в Коллегиях, Сенате и Адмиралтействе.</p>
+            <div class="buy-container">
+                <div class="product-showcase">
+                    <img src="https://via.placeholder.com/500x500/eee/aaa?text=Коробка+3D" alt="Коробка">
                 </div>
-                <div>
-                    <h3>2. Действие</h3>
-                    <p>Стройте флот, собирайте налоги и разыгрывайте карты событий.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                <div class="product-details">
+                    <h2 class="product-title">Правление Петра I</h2>
+                    <p class="product-edition">Базовое издание</p>
+                    
+                    <div class="price-block">
+                        <span class="price">3 990 ₽</span>
+                        <span class="availability">В наличии</span>
+                    </div>
 
-    <!-- Купить -->
-    <section id="buy">
-        <div class="container">
-            <h2>Приобрести игру</h2>
-            <div class="buy-wrapper">
-                <div class="price-box">
-                    <div class="price-val">3 990 ₽</div>
-                    <p>Базовое издание</p>
-                    <small style="opacity: 0.7; margin-top: 10px; display: block;">Доставка по РФ бесплатно</small>
-                </div>
-                <div class="form-box">
-                    <form onsubmit="event.preventDefault(); alert('Спасибо! Мы свяжемся с вами.');">
-                        <input type="text" placeholder="Ваше имя" required>
-                        <input type="email" placeholder="Email" required>
-                        <input type="tel" placeholder="Телефон">
-                        <button type="submit" class="btn btn-primary full-width">Оформить предзаказ</button>
+                    <ul class="feature-list">
+                        <li>Бесплатная доставка по РФ</li>
+                        <li>Гарантия качества компонентов</li>
+                        <li>Справочник в подарок</li>
+                    </ul>
+
+                    <form onsubmit="event.preventDefault(); alert('Спасибо! Мы свяжемся с вами.');" class="buy-form">
+                        <div class="input-group">
+                            <input type="text" placeholder="Ваше имя" required>
+                            <input type="email" placeholder="Email" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Оформить заказ</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Футер -->
-    <footer>
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Bechtold Games. Все права защищены.</p>
-            <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.5;">Разработано с любовью к истории.</p>
+            <div class="footer-columns">
+                <div class="footer-col">
+                    <h4>Навигация</h4>
+                    <a href="#about">Об игре</a>
+                    <a href="#components">Компоненты</a>
+                    <a href="reference.html">Справочник</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Покупателям</h4>
+                    <a href="#">Доставка и оплата</a>
+                    <a href="#">Возврат</a>
+                    <a href="#">Публичная оферта</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <a href="mailto:info@historygame.ru">info@historygame.ru</a>
+                    <a href="tel:+79990000000">+7 (999) 000-00-00</a>
+                    <div class="socials">
+                        <a href="#">VK</a>
+                        <a href="#">TG</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Bechtold Games. Дизайн вдохновлен историей.</p>
+            </div>
         </div>
     </footer>
 
